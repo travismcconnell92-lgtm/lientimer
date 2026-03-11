@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Florida Lien Deadline Calculator | Ready Legal</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root {
+  --navy: #0b2a4a;
+  --navy-mid: #143a63;
+  --orange: #ff8c2a;
+  --orange-dark: #e67a1f;
+  --white: #ffffff;
+  --off-white: #f5f7fb;
+  --gray: #e4e8f0;
+  --text: #1a2332;
+  --text-light: #5a6478;
+  --green: #1a7a4a;
+  --green-light: #e8f5ee;
+  --red: #c0392b;
+  --red-light: #fdf0ee;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--white);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+header {
+  background: var(--navy);
+  padding: 0 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 68px;
+  box-shadow: 0 2px 24px rgba(0,0,0,0.25);
+}
+
+.logo {
+  color: white;
+  text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.logo:hover { color: var(--orange); }
+
+nav { display: flex; gap: 28px; align-items: center; }
+
+nav a {
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s;
+}
+
+nav a:hover { color: white; }
+
+.nav-cta {
+  background: var(--orange);
+  color: white !important;
+  padding: 9px 20px;
+  border-radius: 3px;
+  font-weight: 600 !important;
+  transition: background 0.3s !important;
+}
+
+.nav-cta:hover { background: var(--orange-dark) !important; }
+
+.hero {
+  position: relative;
+  padding: 80px 48px;
+  background: var(--navy);
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, rgba(11,42,74,0.97) 45%, rgba(11,42,74,0.6) 100%),
+    url("https://readylegal.net/wp-content/uploads/2025/05/mick-haupt-tyn3-cljx-a-unsplash.jpg");
+  background-size: cover;
+  background-position: center right;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.1s;
+}
+
+.hero h1 {
+  font-weight: 700;
+  font-size: clamp(32px, 5vw, 58px);
+  color: white;
+  line-height: 1.1;
+  margin-bottom: 16px;
+  max-width: 700px;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.25s;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.65);
+  font-weight: 300;
+  max-width: 560px;
+  line-height: 1.8;
+  opacity: 0;
+  animation: fadeUp 0.7s ease forwards 0.4s;
+}
+
+.warning-banner {
+  background: #fff8f0;
+  border-top: 3px solid var(--orange);
+  border-bottom: 1px solid #fde8cc;
+  padding: 16px 48px;
+}
+
+.warning-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.warning-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+.warning-text { font-size: 13px; color: #7a4a00; line-height: 1.65; font-weight: 400; }
+.warning-text strong { font-weight: 700; color: #5a3400; }
+
+.tool-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 64px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.calc-box {
+  background: var(--off-white);
+  border: 1px solid var(--gray);
+  border-top: 3px solid var(--navy);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.calc-header { background: var(--navy); padding: 24px 32px; }
+
+.calc-header h2 { font-size: 18px; font-weight: 700; color: white; letter-spacing: 0.3px; }
+
+.calc-header p { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 4px; font-weight: 300; }
+
+.calc-body { padding: 32px; }
+
+.calc-field { margin-bottom: 24px; }
+
+.calc-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.calc-field .field-note {
+  font-size: 12px;
+  color: var(--text-light);
+  font-weight: 300;
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+
+.calc-field input[type="date"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--gray);
+  border-radius: 3px;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: white;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.calc-field input[type="date"]:focus { outline: none; border-color: var(--orange); }
+
+.calc-btn {
+  background: var(--orange);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border-radius: 3px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.3s;
+  margin-bottom: 24px;
+}
+
+.calc-btn:hover { background: var(--orange-dark); }
+
+.calc-result { display: none; border-radius: 3px; overflow: hidden; }
+.calc-result.visible { display: block; }
+
+.result-header {
+  background: var(--navy);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.result-header .result-icon { font-size: 18px; }
+
+.result-header span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+.result-body {
+  background: white;
+  border: 1px solid var(--gray);
+  border-top: none;
+  padding: 24px 20px;
+}
+
+.result-date { font-size: 28px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+.result-date.urgent { color: var(--red); }
+.result-date.warning { color: #d4700a; }
+.result-date.safe { color: var(--green); }
+
+.result-countdown {
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding: 6px 12px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.result-countdown.urgent { background: var(--red-light); color: var(--red); }
+.result-countdown.warning { background: #fff3e0; color: #d4700a; }
+.result-countdown.safe { background: var(--green-light); color: var(--green); }
+.result-countdown.past { background: #f0f0f0; color: #666; }
+
+.result-breakdown { border-top: 1px solid var(--off-white); padding-top: 16px; margin-top: 4px; }
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 5px 0;
+  color: var(--text-light);
+}
+
+.result-row strong { color: var(--text); font-weight: 600; }
+
+.result-disclaimer {
+  background: #fff8f0;
+  border: 1px solid #fde8cc;
+  border-radius: 2px;
+  padding: 12px 14px;
+  margin-top: 16px;
+  font-size: 11px;
+  color: #7a4a00;
+  line-height: 1.6;
+}
+
+.reset-btn {
+  background: none;
+  border: 1px solid var(--gray);
+  color: var(--text-light);
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-top: 14px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.reset-btn:hover { border-color: var(--navy); color: var(--navy); }
+
+.form-box {
+  background: white;
+  border: 1px solid var(--gray);
+  border-top: 3px solid var(--orange);
+  padding: 32px 32px 36px;
+  border-radius: 3px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+}
+
+.form-box-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 10px;
+}
+
+.form-box h3 { font-weight: 700; font-size: 20px; color: var(--navy); margin-bottom: 8px; }
+
+.form-intro { font-size: 14px; color: var(--text-light); font-weight: 300; line-height: 1.7; margin-bottom: 24px; }
+
+.cta-phone {
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--navy);
+  text-decoration: none;
+  display: block;
+  margin-bottom: 4px;
+  transition: color 0.3s;
+}
+
+.cta-phone:hover { color: var(--orange); }
+.cta-hours { font-size: 12px; color: var(--text-light); font-weight: 500; margin-bottom: 28px; }
+
+.form-divider { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.form-divider::before,
+.form-divider::after { content: ''; flex: 1; height: 1px; background: var(--gray); }
+.form-divider span { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--text-light); }
+
+form label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--gray);
+  border-radius: 3px;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background: var(--off-white);
+  margin-bottom: 16px;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus { outline: none; border-color: var(--orange); background: white; }
+
+form textarea { resize: vertical; }
+
+form button[type="submit"] {
+  background: var(--orange);
+  color: white;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
+  border-radius: 3px;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: background 0.3s;
+}
+
+form button[type="submit"]:hover { background: var(--orange-dark); }
+
+.edu-section { background: var(--navy); padding: 80px 48px; }
+.edu-inner { max-width: 1200px; margin: 0 auto; }
+
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 14px;
+}
+
+.edu-inner h2 { font-size: clamp(24px, 3vw, 36px); font-weight: 700; color: white; margin-bottom: 48px; max-width: 600px; }
+
+.edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+.edu-card {
+  background: var(--navy-mid);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-top: 2px solid var(--orange);
+  padding: 28px 24px;
+  border-radius: 2px;
+}
+
+.edu-card h3 { font-size: 14px; font-weight: 700; color: white; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.3px; }
+.edu-card p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.75; font-weight: 300; }
+
+.factors-section { padding: 80px 48px; background: var(--off-white); border-top: 1px solid var(--gray); }
+.factors-inner { max-width: 1200px; margin: 0 auto; }
+.factors-inner h2 { font-size: clamp(22px, 3vw, 32px); font-weight: 700; color: var(--navy); margin-bottom: 12px; }
+
+.factors-intro { font-size: 15px; color: var(--text-light); font-weight: 300; line-height: 1.8; max-width: 700px; margin-bottom: 40px; }
+
+.factors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+
+.factor-item {
+  background: white;
+  border: 1px solid var(--gray);
+  border-left: 3px solid var(--orange);
+  padding: 18px 20px;
+  border-radius: 2px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.factor-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.factor-content h4 { font-size: 13px; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
+.factor-content p { font-size: 12px; color: var(--text-light); line-height: 1.6; font-weight: 300; }
+
+.disclaimer-section { background: var(--navy); padding: 56px 48px; }
+
+.disclaimer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.disclaimer-icon { font-size: 32px; margin-top: 4px; }
+.disclaimer-text h3 { font-size: 16px; font-weight: 700; color: white; margin-bottom: 12px; }
+.disclaimer-text p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.8; font-weight: 300; margin-bottom: 10px; }
+.disclaimer-text p:last-child { margin-bottom: 0; }
+
+footer { background: #07192c; padding: 56px 48px 28px; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 56px;
+  padding-bottom: 44px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  margin-bottom: 28px;
+}
+
+.footer-brand .logo { display: block; margin-bottom: 14px; }
+.footer-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 280px; }
+
+.footer-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 18px; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 9px; }
+.footer-col a { font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.3s; }
+.footer-col a:hover { color: var(--orange); }
+
+.footer-contact { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.9; }
+.footer-contact a { color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.3s; }
+.footer-contact a:hover { color: var(--orange); }
+
+.footer-bottom { display: flex; justify-content: space-between; align-items: flex-start; gap: 32px; flex-wrap: wrap; }
+.footer-disclaimer { font-size: 11px; color: rgba(255,255,255,0.2); line-height: 1.75; max-width: 680px; }
+.footer-copy { font-size: 12px; color: rgba(255,255,255,0.25); white-space: nowrap; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 960px) {
+  nav { display: none; }
+  header { padding: 0 24px; }
+  .hero { padding: 56px 24px; }
+  .warning-banner { padding: 16px 24px; }
+  .tool-section { grid-template-columns: 1fr; padding: 40px 24px; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .factors-grid { grid-template-columns: 1fr; }
+  .edu-section, .factors-section, .disclaimer-section { padding: 56px 24px; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  footer { padding: 48px 24px 24px; }
+  .disclaimer-inner { grid-template-columns: 1fr; }
+  .disclaimer-icon { display: none; }
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <a href="https://home.readylegal.net" class="logo">READY LEGAL</a>
+  <nav>
+    <a href="https://counsel.readylegal.net">Counsel</a>
+    <a href="https://readylegal.net/practice-areas/">Practice Areas</a>
+    <a href="https://readylegal.net/pricing/">Pricing</a>
+    <a href="https://readylegal.net/about/">About</a>
+    <a href="https://readylegal.net/articles/">Blog</a>
+    <a href="#contact" class="nav-cta">Get Help</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Free Tool &mdash; Florida Construction Law</p>
+    <h1>Florida Lien Deadline Calculator</h1>
+    <p class="hero-sub">Estimate the deadline to record a construction lien under Florida Chapter 713. Enter the last date you furnished labor, materials, or services to the project.</p>
+  </div>
+</section>
+
+<div class="warning-banner">
+  <div class="warning-inner">
+    <span class="warning-icon">&#9888;</span>
+    <p class="warning-text"><strong>Important Notice:</strong> This tool provides an estimate only and does not constitute legal advice. Lien deadlines are affected by many factors not accounted for here, including the type of lienor, whether a Notice to Owner was required and served, contract terms, project type, and other circumstances. <strong>Do not rely on this calculator as a substitute for advice from a licensed Florida attorney.</strong></p>
+  </div>
+</div>
+
+<section class="tool-section">
+
+  <div class="calc-box">
+    <div class="calc-header">
+      <h2>Early Lien Deadline Estimator</h2>
+      <p>Florida Chapter 713 &mdash; 89-Day Early Filing Buffer</p>
+    </div>
+    <div class="calc-body">
+      <div class="calc-field">
+        <label>Last Date of Furnishing</label>
+        <p class="field-note">The final date you provided labor, materials, or services to the project.</p>
+        <input type="date" id="lastFurnishDate">
+      </div>
+      <button class="calc-btn" onclick="calculateDeadline()">Calculate Deadline &rarr;</button>
+
+      <div class="calc-result" id="calcResult">
+        <div class="result-header">
+          <span class="result-icon">&#128197;</span>
+          <span>Early Lien Deadline</span>
+        </div>
+        <div class="result-body">
+          <div class="result-date" id="resultDate"></div>
+          <div class="result-countdown" id="resultCountdown"></div>
+          <div class="result-breakdown">
+            <div class="result-row">
+              <span>Last date of furnishing</span>
+              <strong id="breakdownInput"></strong>
+            </div>
+            <div class="result-row">
+              <span>Days added (early filing buffer)</span>
+              <strong>89 days</strong>
+            </div>
+            <div class="result-row">
+              <span>Early lien deadline</span>
+              <strong id="breakdownDeadline"></strong>
+            </div>
+          </div>
+          <div class="result-disclaimer">
+            &#9888; This deadline reflects <strong>89 days</strong> as a one-day early filing buffer. The statutory deadline under Fla. Stat. &sect; 713.08 is 90 days. Your actual deadline may differ. Consult a Florida construction attorney before relying on this date.
+          </div>
+          <button class="reset-btn" onclick="resetCalc()">&larr; Start Over</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-box" id="contact">
+    <p class="form-box-label">Questions About Your Lien?</p>
+    <h3>Speak With an Attorney</h3>
+    <p class="form-intro">Lien rights are time-sensitive and easy to lose. If you have questions about your specific situation, contact Ready Legal for a consultation.</p>
+    <a href="tel:4072582002" class="cta-phone">407.258.2002</a>
+    <p class="cta-hours">Monday &ndash; Friday &nbsp;|&nbsp; 9:00 AM &ndash; 5:00 PM</p>
+    <div class="form-divider"><span>Or send a message</span></div>
+    <form action="https://formspree.io/f/xgonadnj" method="POST">
+      <input type="hidden" name="_subject" value="Lien Deadline Inquiry - Ready Legal">
+      <label>Name</label>
+      <input type="text" name="name" placeholder="Jane Smith" required>
+      <label>Email</label>
+      <input type="email" name="email" placeholder="jane@example.com" required>
+      <label>Phone</label>
+      <input type="tel" name="phone" placeholder="(407) 555-0000">
+      <label>Briefly Describe Your Situation</label>
+      <textarea name="message" rows="4" placeholder="Tell us about your project and what you need help with..." required></textarea>
+      <button type="submit">Send Message &rarr;</button>
+    </form>
+  </div>
+
+</section>
+
+<section class="edu-section">
+  <div class="edu-inner">
+    <p class="section-label">Florida Chapter 713</p>
+    <h2>Understanding the Lien Deadline</h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <h3>The General Rule</h3>
+        <p>Under Florida Statute &sect; 713.08, a contractor, subcontractor, or supplier must record a claim of lien within 90 days after the final furnishing of labor, services, or materials to the project. Missing this deadline permanently extinguishes lien rights.</p>
+      </div>
+      <div class="edu-card">
+        <h3>What Counts as "Final Furnishing"</h3>
+        <p>The clock starts on the last date you actually provided labor, services, or materials to the project &mdash; not the date of your invoice or contract. Warranty work, repairs, or corrective work after final completion may or may not extend the deadline depending on the circumstances.</p>
+      </div>
+      <div class="edu-card">
+        <h3>Who Can File a Lien</h3>
+        <p>Florida's Construction Lien Law protects contractors, subcontractors, sub-subcontractors, laborers, and material suppliers who furnish services or materials improving real property under a contract. Design professionals may also have lien rights in certain circumstances.</p>
+      </div>
+      <div class="edu-card">
+        <h3>Notice to Owner Requirements</h3>
+        <p>Certain lienors &mdash; particularly those without a direct contract with the property owner &mdash; must serve a Notice to Owner before or within 45 days of first furnishing to preserve lien rights. Failure to serve a timely Notice to Owner can eliminate your lien rights entirely, regardless of the 90-day deadline.</p>
+      </div>
+      <div class="edu-card">
+        <h3>After You Record the Lien</h3>
+        <p>Recording a lien is not the end of the process. A lien must be enforced by filing a lawsuit within one year of recording, unless a shortened period is triggered by a Notice of Contest of Lien or other statutory event. Recording alone does not guarantee payment.</p>
+      </div>
+      <div class="edu-card">
+        <h3>Payment Bonds</h3>
+        <p>On bonded projects &mdash; typically public projects or private projects where the owner has obtained a payment bond &mdash; your remedy may be against the bond rather than the property. Different notice requirements and deadlines apply to payment bond claims under Florida Statute &sect; 713.23.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="factors-section">
+  <div class="factors-inner">
+    <p class="section-label">Know the Variables</p>
+    <h2>Factors That May Affect Your Deadline</h2>
+    <p class="factors-intro">The 90-day rule is a starting point &mdash; not the whole picture. The following factors can shorten, complicate, or eliminate your lien rights under Florida law. An attorney can evaluate these issues in the context of your specific project.</p>
+    <div class="factors-grid">
+      <div class="factor-item">
+        <span class="factor-icon">&#128203;</span>
+        <div class="factor-content">
+          <h4>Notice to Owner Not Served</h4>
+          <p>Subcontractors and suppliers without a direct contract with the owner must serve a Notice to Owner within 45 days of first furnishing or risk losing all lien rights.</p>
+        </div>
+      </div>
+      <div class="factor-item">
+        <span class="factor-icon">&#9889;</span>
+        <div class="factor-content">
+          <h4>Notice of Contest of Lien</h4>
+          <p>An owner can serve a Notice of Contest of Lien after you record, which shortens the enforcement deadline from one year to 60 days.</p>
+        </div>
+      </div>
+      <div class="factor-item">
+        <span class="factor-icon">&#127963;</span>
+        <div class="factor-content">
+          <h4>Public vs. Private Projects</h4>
+          <p>Liens cannot be recorded against public property. Public projects are governed by payment bond requirements with different rules and deadlines.</p>
+        </div>
+      </div>
+      <div class="factor-item">
+        <span class="factor-icon">&#128221;</span>
+        <div class="factor-content">
+          <h4>Contract Terms</h4>
+          <p>Some contracts include provisions that modify statutory rights or require additional notice steps before a lien can be recorded or enforced.</p>
+        </div>
+      </div>
+      <div class="factor-item">
+        <span class="factor-icon">&#128295;</span>
+        <div class="factor-content">
+          <h4>Punch List vs. Final Completion</h4>
+          <p>Whether punch list or warranty work extends the 90-day period is a fact-specific question. Not all post-completion work resets the lien clock.</p>
+        </div>
+      </div>
+      <div class="factor-item">
+        <span class="factor-icon">&#128204;</span>
+        <div class="factor-content">
+          <h4>Direct Contract vs. Subcontract</h4>
+          <p>Your relationship to the project &mdash; prime contractor, subcontractor, sub-sub, or supplier &mdash; affects which requirements apply and what rights you have.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="disclaimer-section">
+  <div class="disclaimer-inner">
+    <div class="disclaimer-icon">&#9878;</div>
+    <div class="disclaimer-text">
+      <h3>Legal Disclaimer &mdash; Please Read</h3>
+      <p>This calculator is provided by Ready Legal as a free informational tool for general educational purposes only. It is not legal advice and should not be used as a substitute for consultation with a licensed Florida attorney. The calculation provided is based on a conservative 89-day window and does not account for the many other legal requirements, exceptions, and factors that may affect your lien rights.</p>
+      <p>Use of this tool does not create an attorney-client relationship between you and Ready Legal or any of its attorneys. No attorney-client relationship is formed until a written engagement agreement has been signed by both parties. Ready Legal makes no representations or warranties regarding the accuracy or completeness of the results produced by this tool.</p>
+      <p>Lien deadlines are strictly enforced under Florida law, and missing a deadline typically results in permanent loss of lien rights. <strong style="color:rgba(255,255,255,0.85);">If you have any doubt about your lien deadline or lien rights, you should consult a qualified Florida construction attorney immediately.</strong></p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="https://home.readylegal.net" class="logo">READY LEGAL</a>
+        <p>Prompt, capable, and effective legal representation for Orlando's small business community. Construction law, business law, and litigation throughout Florida.</p>
+        <br>
+        <p style="font-size:11px; color:rgba(255,255,255,0.22);">Ready Legal is the operating name of Travis McConnell, PLLC.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="https://counsel.readylegal.net">Counsel</a></li>
+          <li><a href="https://readylegal.net/practice-areas/">Practice Areas</a></li>
+          <li><a href="https://readylegal.net/pricing/">Pricing</a></li>
+          <li><a href="https://readylegal.net/about/">About</a></li>
+          <li><a href="https://readylegal.net/articles/">Blog</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <div class="footer-contact">
+          924 N. Magnolia Avenue<br>
+          Suite 202, #1178<br>
+          Orlando, FL 32803<br>
+          <span style="font-size:11px; color:rgba(255,255,255,0.25);">*Postbox &mdash; mailing only</span>
+          <br><br>
+          <a href="tel:4072582002">(407) 258-2002</a><br>
+          <a href="mailto:admin@readylegal.net">admin@readylegal.net</a><br>
+          <a href="https://home.readylegal.net">www.readylegal.net</a>
+          <br><br>
+          Veteran Owned &#127482;&#127480;
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-disclaimer">The information on this page is for general informational purposes only and does not constitute legal advice. This tool is provided for educational purposes and should not be relied upon as a substitute for legal counsel. No attorney-client relationship is formed by use of this tool or submission of any form until a written engagement agreement has been executed by both parties. Services are limited to matters involving the State of Florida.</p>
+      <p class="footer-copy">&copy; 2025 Ready Legal</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function calculateDeadline() {
+  var input = document.getElementById('lastFurnishDate').value;
+  if (!input) {
+    alert('Please enter the last date of furnishing.');
+    return;
+  }
+
+  var parts = input.split('-');
+  var year  = parseInt(parts[0], 10);
+  var month = parseInt(parts[1], 10) - 1;
+  var day   = parseInt(parts[2], 10);
+
+  var furnishDate = new Date(year, month, day);
+  var deadline    = new Date(year, month, day + 89);
+
+  var options     = { year: 'numeric', month: 'long', day: 'numeric' };
+  var deadlineStr = deadline.toLocaleDateString('en-US', options);
+  var furnishStr  = furnishDate.toLocaleDateString('en-US', options);
+
+  var today = new Date();
+  today.setHours(0, 0, 0, 0);
+  var daysRemaining = Math.round((deadline - today) / 86400000);
+
+  var resultDateEl = document.getElementById('resultDate');
+  resultDateEl.textContent = deadlineStr;
+  resultDateEl.className = 'result-date';
+
+  var countdownEl = document.getElementById('resultCountdown');
+  countdownEl.className = 'result-countdown';
+
+  if (daysRemaining < 0) {
+    countdownEl.textContent = 'Deadline passed ' + Math.abs(daysRemaining) + (Math.abs(daysRemaining) === 1 ? ' day' : ' days') + ' ago';
+    countdownEl.classList.add('past');
+  } else if (daysRemaining === 0) {
+    countdownEl.textContent = 'Deadline is TODAY';
+    countdownEl.classList.add('urgent');
+    resultDateEl.classList.add('urgent');
+  } else if (daysRemaining <= 14) {
+    countdownEl.textContent = daysRemaining + (daysRemaining === 1 ? ' day' : ' days') + ' remaining';
+    countdownEl.classList.add('urgent');
+    resultDateEl.classList.add('urgent');
+  } else if (daysRemaining <= 30) {
+    countdownEl.textContent = daysRemaining + ' days remaining';
+    countdownEl.classList.add('warning');
+    resultDateEl.classList.add('warning');
+  } else {
+    countdownEl.textContent = daysRemaining + ' days remaining';
+    countdownEl.classList.add('safe');
+    resultDateEl.classList.add('safe');
+  }
+
+  document.getElementById('breakdownInput').textContent   = furnishStr;
+  document.getElementById('breakdownDeadline').textContent = deadlineStr;
+
+  var result = document.getElementById('calcResult');
+  result.classList.add('visible');
+  result.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function resetCalc() {
+  document.getElementById('lastFurnishDate').value = '';
+  document.getElementById('calcResult').classList.remove('visible');
+}
+
+document.getElementById('lastFurnishDate').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { calculateDeadline(); }
+});
+</script>
+
+</body>
+</html>
